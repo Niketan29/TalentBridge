@@ -48,7 +48,7 @@ export default function HomePage() {
               to="/dashboard"
               className="px-6 py-3 rounded-xl text-sm font-semibold border hover:bg-slate-50 text-center"
             >
-              Dashboard (Test)
+              Dashboard 
             </Link>
           </div>
         </div>
