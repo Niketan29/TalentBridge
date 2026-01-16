@@ -64,7 +64,10 @@ export default function AppRoutes() {
           <Route path="resumes/:id/preview" element={<ResumePreviewPage />} />
           <Route path="ats-checker" element={<ATSCheckerPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
-          <Route path="*" element={<div className="p-6 font-bold">404 - Page Not Found</div>} />
+          <Route
+            path="*"
+            element={<div className="p-6 font-bold">404 - Page Not Found</div>}
+          />
         </Route>
 
         {/* Recruiter */}
@@ -84,6 +87,7 @@ export default function AppRoutes() {
             path="job/:jobId/applicants"
             element={<RecruiterApplicantsPage />}
           />
+          <Route path="notifications" element={<NotificationsPage />} />
         </Route>
 
         {/* Admin */}
