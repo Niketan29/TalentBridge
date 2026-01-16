@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { generateAccessToken, generateRefreshToken, } from "../utils/generateToken.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/generateToken.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -43,39 +46,55 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).json({ message: "Email and password required" });
+    }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ message: "Invalid credentials" });
 
+    // ✅ FIX 1: User not registered
+    if (!user) {
+      return res.status(404).json({ message: "User not registered" });
+    }
+
+    // ✅ blocked user check
     if (user.isBlocked) {
       return res.status(403).json({
         message: "Your account is blocked. Please contact admin.",
       });
     }
 
+    // ✅ wrong password
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: "Invalid credentials" });
+    if (!match) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
 
     const payload = { id: user._id, role: user.role };
 
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
-    // refresh token cookie
+    // ✅ FIX 2: cookie settings for production
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: false, // later in production: true
-      sameSite: "lax",
+      secure: isProduction, // ✅ true on Render (HTTPS)
+      sameSite: isProduction ? "none" : "lax", // ✅ required for Vercel <-> Render cookie
       path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     return res.json({
       message: "Login successful",
       accessToken,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
@@ -101,7 +120,14 @@ export const refreshAccessToken = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
-  res.clearCookie("refreshToken", { path: "/" });
+  const isProduction = process.env.NODE_ENV === "production";
+
+  res.clearCookie("refreshToken", {
+    path: "/",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
+
   return res.json({ message: "Logged out successfully" });
 };
 
