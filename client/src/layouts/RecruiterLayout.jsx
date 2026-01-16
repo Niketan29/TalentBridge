@@ -23,13 +23,19 @@ export default function RecruiterLayout() {
     try {
       const res = await getUnreadCountApi(accessToken);
       setUnread(res.data.unread || 0);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
     if (!accessToken) return;
-    loadUnread();
+
+    loadUnread(); 
+
+    const interval = setInterval(() => {
+      loadUnread(); 
+    }, 5000); 
+
+    return () => clearInterval(interval);
   }, [accessToken]);
 
   return (
