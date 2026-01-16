@@ -1,20 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { getUnreadCountApi } from "../services/notificationApi";
 
 export default function RecruiterLayout() {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { clearSession } = useAuth();
+  const { clearSession, accessToken } = useAuth();
+
+  const [unread, setUnread] = useState(0);
 
   const links = [
     { to: "/recruiter", label: "Overview" },
     { to: "/recruiter/post-job", label: "Post Job" },
     { to: "/recruiter/my-jobs", label: "My Jobs" },
     { to: "/recruiter/profile", label: "Company Profile" },
-    { to: "/recruiter/notifications", label: "Notifications" }
+    { to: "/recruiter/notifications", label: "Notifications" },
   ];
+
+  const loadUnread = async () => {
+    try {
+      const res = await getUnreadCountApi(accessToken);
+      setUnread(res.data.unread || 0);
+    } catch (err) {
+      // ignore silently
+    }
+  };
+
+  useEffect(() => {
+    if (!accessToken) return;
+    loadUnread();
+    // eslint-disable-next-line
+  }, [accessToken]);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -55,7 +73,15 @@ export default function RecruiterLayout() {
                 }`
               }
             >
-              {l.label}
+              <div className="flex items-center justify-between">
+                <span>{l.label}</span>
+
+                {l.to === "/recruiter/notifications" && unread > 0 && (
+                  <span className="text-xs font-extrabold px-2 py-1 rounded-full bg-red-600 text-white">
+                    {unread}
+                  </span>
+                )}
+              </div>
             </NavLink>
           ))}
         </nav>
