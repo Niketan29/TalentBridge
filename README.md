@@ -53,7 +53,7 @@ TalentBridge is a full-stack MERN application designed to connect **students** w
 - Frontend: Vercel
 - Database: MongoDB Atlas
 
----
+
 
 
 
