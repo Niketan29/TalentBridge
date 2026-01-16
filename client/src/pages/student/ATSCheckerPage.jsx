@@ -28,7 +28,6 @@ export default function ATSCheckerPage() {
       const list = res.data.resumes || [];
       setResumes(list);
 
-      // auto select active resume if present
       const active = list.find((r) => r.isActive);
       setResumeId(active?._id || list[0]?._id || "");
     } catch (err) {
@@ -62,7 +61,6 @@ export default function ATSCheckerPage() {
 
   useEffect(() => {
     loadResumes();
-    // eslint-disable-next-line
   }, []);
 
   const score = result?.score ?? null;

@@ -43,7 +43,6 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, []);
 
   return (

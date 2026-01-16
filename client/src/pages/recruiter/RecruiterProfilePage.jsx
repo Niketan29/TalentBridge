@@ -68,7 +68,6 @@ export default function RecruiterProfilePage() {
 
   useEffect(() => {
     loadProfile();
-    // eslint-disable-next-line
   }, []);
 
   if (loading) {

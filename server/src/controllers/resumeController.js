@@ -77,13 +77,11 @@ export const setActiveResume = async (req, res) => {
   try {
     const resumeId = req.params.id;
 
-    // first make all inactive
     await Resume.updateMany(
       { studentId: req.user._id },
       { $set: { isActive: false } }
     );
 
-    // set this active
     const active = await Resume.findOneAndUpdate(
       { _id: resumeId, studentId: req.user._id },
       { $set: { isActive: true } },

@@ -28,7 +28,6 @@ export const applyToJob = async (req, res) => {
 
     return res.status(201).json({ message: "Applied ✅", application: app });
   } catch (err) {
-    // duplicate apply error
     if (err.code === 11000) {
       return res.status(409).json({ message: "Already applied to this job" });
     }
@@ -52,7 +51,6 @@ export const getApplicantsForJob = async (req, res) => {
   try {
     const { jobId } = req.params;
 
-    // recruiter can only see applicants for their own job
     const job = await Job.findById(jobId);
     if (!job) return res.status(404).json({ message: "Job not found" });
 
@@ -72,7 +70,7 @@ export const getApplicantsForJob = async (req, res) => {
 
 export const updateApplicationStatus = async (req, res) => {
   try {
-    const { id } = req.params; // application id
+    const { id } = req.params; 
     const { status } = req.body;
 
     const allowed = ["applied", "shortlisted", "rejected", "hired"];
@@ -83,7 +81,6 @@ export const updateApplicationStatus = async (req, res) => {
     const app = await Application.findById(id);
     if (!app) return res.status(404).json({ message: "Application not found" });
 
-    // only recruiter can update
     if (app.recruiterId.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not allowed" });
     }
@@ -108,11 +105,9 @@ export const getRecruiterApplications = async (req, res) => {
   try {
     const recruiterId = req.user._id;
 
-    // Find recruiter jobs
     const jobs = await Job.find({ recruiterId }).select("_id");
     const jobIds = jobs.map((j) => j._id);
 
-    // Find applications on recruiter jobs
     const applications = await Application.find({ jobId: { $in: jobIds } })
       .populate("studentId", "name email")
       .populate("jobId", "title companyName location")

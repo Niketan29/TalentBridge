@@ -14,7 +14,6 @@ export default function DashboardLayout() {
       const res = await getUnreadCountApi(accessToken);
       setUnread(res.data.unread || 0);
     } catch {
-      // ignore silently
     }
   };
 
@@ -23,10 +22,8 @@ export default function DashboardLayout() {
 
     loadUnread();
 
-    // auto refresh every 10 sec
     const t = setInterval(loadUnread, 10000);
     return () => clearInterval(t);
-    // eslint-disable-next-line
   }, [accessToken]);
 
   const navigate = useNavigate();
@@ -43,7 +40,6 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* mobile overlay */}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/40 lg:hidden"
@@ -71,7 +67,7 @@ export default function DashboardLayout() {
             <NavLink
               key={l.to}
               to={l.to}
-              end={l.to === "/dashboard"} // ✅ fix: only exact dashboard route should highlight
+              end={l.to === "/dashboard"} 
               className={({ isActive }) =>
                 `block rounded-xl px-4 py-2 text-sm font-semibold transition ${
                   isActive
@@ -103,7 +99,7 @@ export default function DashboardLayout() {
             </div>
 
             <div className="flex items-center gap-3">
-              {/* 🔔 Notifications */}
+              {/* Notifications */}
               <button
                 onClick={() => navigate("/dashboard/notifications")}
                 className="relative px-4 py-2 rounded-xl border hover:bg-slate-50 text-sm font-semibold"

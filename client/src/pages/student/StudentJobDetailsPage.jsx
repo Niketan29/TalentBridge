@@ -30,7 +30,6 @@ export default function StudentJobDetailsPage() {
 
   useEffect(() => {
     loadJob();
-    // eslint-disable-next-line
   }, [id]);
 
   if (loading) {
@@ -131,7 +130,6 @@ export default function StudentJobDetailsPage() {
           ))}
         </div>
 
-        {/* Apply button will be added in Module 4 */}
         {applyMsg && (
           <div className="mt-4 rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700">
             {applyMsg}

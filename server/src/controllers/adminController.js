@@ -61,7 +61,6 @@ export const toggleBlockUser = async (req, res) => {
     const user = await User.findById(id).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // ✅ don't allow blocking admin
     if (user.role === "admin") {
       return res.status(400).json({ message: "Cannot block admin user" });
     }

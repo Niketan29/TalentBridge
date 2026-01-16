@@ -23,7 +23,6 @@ export default function StudentJobsPage() {
       setError("");
       setLoading(true);
 
-      // remove empty filters
       const params = {};
       Object.keys(filters).forEach((k) => {
         if (filters[k]) params[k] = filters[k];
@@ -40,7 +39,6 @@ export default function StudentJobsPage() {
 
   useEffect(() => {
     loadJobs();
-    // eslint-disable-next-line
   }, []);
 
   return (

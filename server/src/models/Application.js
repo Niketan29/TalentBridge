@@ -29,7 +29,6 @@ const applicationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// prevent duplicate application by same student to same job
 applicationSchema.index({ jobId: 1, studentId: 1 }, { unique: true });
 
 export default mongoose.model("Application", applicationSchema);

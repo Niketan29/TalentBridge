@@ -1,6 +1,5 @@
 import Resume from "../models/Resume.js";
 
-// very simple tokenizer (ATS-friendly)
 const tokenize = (text = "") => {
   return text
     .toLowerCase()
@@ -10,7 +9,6 @@ const tokenize = (text = "") => {
     .filter(Boolean);
 };
 
-// remove useless words
 const stopWords = new Set([
   "the","and","or","a","an","to","in","of","for","with","on","at","by",
   "is","are","was","were","be","been","this","that","from","as","it","we",
@@ -25,7 +23,6 @@ const normalizeKeywords = (words) => {
     freq.set(w, (freq.get(w) || 0) + 1);
   }
 
-  // return sorted high frequency words
   return [...freq.entries()]
     .sort((a, b) => b[1] - a[1])
     .map(([word]) => word);
@@ -76,7 +73,7 @@ export const analyzeATS = async (req, res) => {
     const jdTokens = tokenize(jobDescription);
     const resumeTokens = tokenize(buildResumeText(resume));
 
-    const jdKeywords = normalizeKeywords(jdTokens).slice(0, 40); // top 40 keywords
+    const jdKeywords = normalizeKeywords(jdTokens).slice(0, 40); 
     const resumeSet = new Set(resumeTokens);
 
     const matched = jdKeywords.filter((k) => resumeSet.has(k));

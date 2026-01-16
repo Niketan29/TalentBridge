@@ -69,7 +69,6 @@ export default function StudentDashboard() {
 
   useEffect(() => {
     loadDashboard();
-    // eslint-disable-next-line
   }, []);
 
   const appStats = useMemo(() => {

@@ -12,15 +12,11 @@ import {
 
 const router = express.Router();
 
-/**
- * Student
- */
+
 router.post("/apply", protect, requireRole(["student"]), applyToJob);
 router.get("/my", protect, requireRole(["student"]), getMyApplications);
 
-/**
- * Recruiter
- */
+
 router.get(
   "/recruiter",
   protect,

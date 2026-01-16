@@ -27,7 +27,6 @@ export default function ResumePreviewPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, [id]);
 
   if (loading) {
@@ -86,7 +85,6 @@ export default function ResumePreviewPage() {
               Edit
             </Link>
 
-            {/* PDF download added later in roadmap */}
             <button
               onClick={() => {
                 const element = document.getElementById("resume-pdf");

@@ -94,7 +94,6 @@ export default function StudentProfilePage() {
 
   useEffect(() => {
     loadProfile();
-    // eslint-disable-next-line
   }, []);
 
   if (loading) {

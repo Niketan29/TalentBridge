@@ -42,7 +42,6 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, []);
 
   return (

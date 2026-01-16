@@ -79,7 +79,6 @@ export default function StudentResumesPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, []);
 
   return (

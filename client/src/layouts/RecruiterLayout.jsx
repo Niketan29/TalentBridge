@@ -24,14 +24,12 @@ export default function RecruiterLayout() {
       const res = await getUnreadCountApi(accessToken);
       setUnread(res.data.unread || 0);
     } catch (err) {
-      // ignore silently
     }
   };
 
   useEffect(() => {
     if (!accessToken) return;
     loadUnread();
-    // eslint-disable-next-line
   }, [accessToken]);
 
   return (

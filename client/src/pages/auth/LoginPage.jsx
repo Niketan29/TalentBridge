@@ -24,7 +24,6 @@ export default function LoginPage() {
 
       setSession(res.data.accessToken, res.data.user);
 
-      // role redirect
       if (res.data.user.role === "recruiter") navigate("/recruiter");
       else if (res.data.user.role === "admin") navigate("/admin");
       else navigate("/dashboard");

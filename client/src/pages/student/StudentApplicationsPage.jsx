@@ -33,7 +33,6 @@ export default function StudentApplicationsPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, []);
 
   return (

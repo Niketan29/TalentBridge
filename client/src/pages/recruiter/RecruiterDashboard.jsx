@@ -65,7 +65,6 @@ export default function RecruiterDashboard() {
   useEffect(() => {
     if (!accessToken) return;
     loadDashboard();
-    // eslint-disable-next-line
   }, [accessToken]);
 
   const stats = useMemo(() => {

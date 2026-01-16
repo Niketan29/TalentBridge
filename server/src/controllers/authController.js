@@ -52,19 +52,16 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    // ✅ FIX 1: User not registered
     if (!user) {
       return res.status(404).json({ message: "User not registered" });
     }
 
-    // ✅ blocked user check
     if (user.isBlocked) {
       return res.status(403).json({
         message: "Your account is blocked. Please contact admin.",
       });
     }
 
-    // ✅ wrong password
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -75,13 +72,12 @@ export const loginUser = async (req, res) => {
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
-    // ✅ FIX 2: cookie settings for production
     const isProduction = process.env.NODE_ENV === "production";
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: isProduction, // ✅ true on Render (HTTPS)
-      sameSite: isProduction ? "none" : "lax", // ✅ required for Vercel <-> Render cookie
+      secure: isProduction, 
+      sameSite: isProduction ? "none" : "lax", 
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });

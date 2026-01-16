@@ -25,7 +25,6 @@ export default function RecruiterMyJobsPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, []);
 
   return (

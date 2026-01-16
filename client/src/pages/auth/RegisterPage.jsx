@@ -29,7 +29,6 @@ export default function RegisterPage() {
 
       await registerApi(form);
 
-      // auto login after register
       const loginRes = await loginApi({
         email: form.email,
         password: form.password,

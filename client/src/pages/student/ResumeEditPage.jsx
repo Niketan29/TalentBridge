@@ -47,11 +47,9 @@ export default function ResumeEditPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line
   }, [id]);
 
   const updateField = (path, value) => {
-    // path example: "personal.fullName" or "summary"
     setResume((prev) => {
       const copy = structuredClone(prev);
       const parts = path.split(".");
@@ -96,7 +94,6 @@ export default function ResumeEditPage() {
 
       const payload = structuredClone(resume);
 
-      // normalize skills (string array)
       if (Array.isArray(payload.skills)) {
         payload.skills = skillsText
           .split(",")
