@@ -13,6 +13,7 @@ export default function RecruiterLayout() {
     { to: "/recruiter/post-job", label: "Post Job" },
     { to: "/recruiter/my-jobs", label: "My Jobs" },
     { to: "/recruiter/profile", label: "Company Profile" },
+    { to: "/recruiter/notifications", label: "Notifications" }
   ];
 
   return (
