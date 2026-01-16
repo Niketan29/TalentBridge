@@ -55,24 +55,7 @@ TalentBridge is a full-stack MERN application designed to connect **students** w
 
 ---
 
-## 📂 Project Structure
 
-```
-TalentBridge/
-│
-├── client/                 # Frontend (Vite React)
-│   ├── src/
-│   └── vercel.json
-│
-└── server/                 # Backend (Node/Express)
-    ├── src/
-    │   ├── controllers/
-    │   ├── models/
-    │   ├── routes/
-    │   ├── middleware/
-    │   └── config/
-    └── package.json
-```
 
 ---
 
