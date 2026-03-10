@@ -4,6 +4,8 @@ import Notification from "../models/Notification.js";
 
 export const applyToJob = async (req, res) => {
   try {
+
+    console.log("BODY:", req.body);
     const { jobId, resumeId } = req.body;
 
 
