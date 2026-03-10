@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getJobByIdApi } from "../../services/jobApi";
 import { useAuth } from "../../context/useAuth";
 import { applyJobApi } from "../../services/applicationApi";
+import { getActiveResumeApi } from "../../services/resumeApi";
 
 export default function StudentJobDetailsPage() {
   const { id } = useParams();
@@ -60,9 +61,19 @@ export default function StudentJobDetailsPage() {
       setApplyError("");
       setApplying(true);
 
-      const selectedResumeId = "696777b2351cf0911e016f9f";
+      const activeResume = await getActiveResumeApi(accessToken);
 
-      const res = await applyJobApi(accessToken, id, selectedResumeId);
+      if (!activeResume.data.resume) {
+        setApplyError("Please create and set an active resume first.");
+        return;
+      }
+
+      const res = await applyJobApi(
+        accessToken,
+        id,
+        activeResume.data.resume._id,
+      );
+
       setApplyMsg(res.data.message || "Applied ✅");
     } catch (err) {
       setApplyError(err?.response?.data?.message || "Apply failed");
