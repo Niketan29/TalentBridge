@@ -19,7 +19,7 @@ router.get("/", protect, requireRole(["student"]), getMyResumes);
 
 router.get("/active", protect, requireRole(["student"]), getActiveResume);
 
-router.get("/:id", protect, requireRole("student", "recruiter"), getResumeById); 
+router.get("/:id", protect, getResumeById); 
 router.put("/:id", protect, requireRole(["student"]), updateResume);
 router.delete("/:id", protect, requireRole(["student"]), deleteResume);
 
