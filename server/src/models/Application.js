@@ -17,6 +17,10 @@ const applicationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    resumeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Resume"
+    },
 
     status: {
       type: String,

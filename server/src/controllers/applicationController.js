@@ -4,7 +4,9 @@ import Notification from "../models/Notification.js";
 
 export const applyToJob = async (req, res) => {
   try {
-    const { jobId } = req.body;
+    const { jobId, resumeId } = req.body;
+
+
 
     if (!jobId) return res.status(400).json({ message: "jobId is required" });
 
@@ -15,6 +17,7 @@ export const applyToJob = async (req, res) => {
       jobId,
       studentId: req.user._id,
       recruiterId: job.recruiterId,
+      resumeId,
       status: "applied",
     });
 
@@ -60,7 +63,8 @@ export const getApplicantsForJob = async (req, res) => {
 
     const apps = await Application.find({ jobId })
       .sort({ createdAt: -1 })
-      .populate("studentId", "name email role");
+      .populate("studentId", "name email role")
+      .populate("resumeId");
 
     return res.json({ applicants: apps });
   } catch (err) {
@@ -70,7 +74,7 @@ export const getApplicantsForJob = async (req, res) => {
 
 export const updateApplicationStatus = async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const { status } = req.body;
 
     const allowed = ["applied", "shortlisted", "rejected", "hired"];
