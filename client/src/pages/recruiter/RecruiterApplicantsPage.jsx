@@ -107,15 +107,13 @@ export default function RecruiterApplicantsPage() {
                     <p className="text-sm text-slate-600">
                       {a.studentId?.email}
                     </p>
-                    {a.resumeId?.fileUrl && (
-                      <a
-                        href={a.resumeId.fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {a.resumeId && (
+                      <Link
+                        to={`/student/resume/${a.resumeId._id}/preview`}
                         className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:underline"
                       >
-                        View Resume
-                      </a>
+                        📄 View Resume
+                      </Link>
                     )}
 
                     <p className="text-xs text-slate-500 mt-1">
