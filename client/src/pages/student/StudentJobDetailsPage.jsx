@@ -62,10 +62,7 @@ export default function StudentJobDetailsPage() {
 
       const selectedResumeId = localStorage.getItem("resumeId");
 
-      const res = await applyJobApi(accessToken, {
-        jobId: id,
-        resumeId: selectedResumeId,
-      });
+      const res = await applyJobApi(accessToken, id, selectedResumeId);
       setApplyMsg(res.data.message || "Applied ✅");
     } catch (err) {
       setApplyError(err?.response?.data?.message || "Apply failed");

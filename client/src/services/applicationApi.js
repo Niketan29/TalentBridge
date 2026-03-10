@@ -1,9 +1,9 @@
 import api from "./api";
 
-export const applyJobApi = (accessToken, jobId) =>
+export const applyJobApi = (accessToken, jobId, resumeId) =>
   api.post(
     "/applications/apply",
-    { jobId },
+    { jobId, resumeId },
     { headers: { Authorization: `Bearer ${accessToken}` } }
   );
 
