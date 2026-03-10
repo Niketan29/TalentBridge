@@ -87,6 +87,7 @@ export default function AppRoutes() {
             path="job/:jobId/applicants"
             element={<RecruiterApplicantsPage />}
           />
+          <Route path="resume/:id/preview" element={<ResumePreviewPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
         </Route>
 
