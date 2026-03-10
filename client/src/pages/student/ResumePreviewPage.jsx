@@ -6,8 +6,7 @@ import html2pdf from "html2pdf.js";
 
 export default function ResumePreviewPage() {
   const { id } = useParams();
-  const { accessToken } = useAuth();
-
+  const { accessToken, user } = useAuth();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -47,7 +46,7 @@ export default function ResumePreviewPage() {
             {error || "Resume not found"}
           </p>
           <Link
-            to="/dashboard/resumes"
+            to={user?.role === "recruiter" ? "/recruiter/my-jobs" : "/dashboard/resumes"}
             className="inline-block mt-4 text-sm font-bold hover:underline"
           >
             ← Back
@@ -78,12 +77,14 @@ export default function ResumePreviewPage() {
           </div>
 
           <div className="flex gap-2">
-            <Link
-              to={`/dashboard/resumes/${id}/edit`}
-              className="px-5 py-3 rounded-xl border text-sm font-semibold hover:bg-slate-50"
-            >
-              Edit
-            </Link>
+            {user?.role === "student" && (
+              <Link
+                to={`/dashboard/resumes/${id}/edit`}
+                className="px-5 py-3 rounded-xl border text-sm font-semibold hover:bg-slate-50"
+              >
+                Edit
+              </Link>
+            )}
 
             <button
               onClick={() => {
@@ -109,7 +110,9 @@ export default function ResumePreviewPage() {
         </div>
 
         {/* Resume Sheet */}
-        <div id="resume-pdf" className="bg-white border rounded-3xl p-8 sm:p-10"
+        <div
+          id="resume-pdf"
+          className="bg-white border rounded-3xl p-8 sm:p-10"
         >
           {/* Top */}
           <div className="border-b pb-5">

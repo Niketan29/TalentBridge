@@ -160,12 +160,14 @@ export default function StudentResumesPage() {
                 </div>
 
                 <div className="mt-5 flex flex-col sm:flex-row gap-2">
-                  <Link
-                    to={`/dashboard/resumes/${r._id}/edit`}
-                    className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 text-center"
-                  >
-                    Edit
-                  </Link>
+                  {user?.role === "student" && (
+                    <Link
+                      to={`/dashboard/resumes/${id}/edit`}
+                      className="px-5 py-3 rounded-xl border text-sm font-semibold hover:bg-slate-50"
+                    >
+                      Edit
+                    </Link>
+                  )}
 
                   <Link
                     to={`/dashboard/resumes/${r._id}/preview`}
