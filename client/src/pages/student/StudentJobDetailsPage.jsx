@@ -60,7 +60,7 @@ export default function StudentJobDetailsPage() {
       setApplyError("");
       setApplying(true);
 
-      const selectedResumeId = localStorage.getItem("resumeId");
+      const selectedResumeId = "696777b2351cf0911e016f9f";
 
       const res = await applyJobApi(accessToken, id, selectedResumeId);
       setApplyMsg(res.data.message || "Applied ✅");
