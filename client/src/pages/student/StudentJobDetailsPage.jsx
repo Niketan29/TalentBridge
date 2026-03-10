@@ -57,22 +57,20 @@ export default function StudentJobDetailsPage() {
 
   const handleApply = async () => {
     try {
-      setApplyMsg("");
-      setApplyError("");
       setApplying(true);
 
-      const activeResume = await getActiveResumeApi(accessToken);
+      if (user.role !== "student") return;
 
-      if (!activeResume.data.resume) {
-        setApplyError("Please create and set an active resume first.");
+      const activeResumeRes = await getActiveResumeApi(accessToken);
+
+      const resume = activeResumeRes?.data?.resume;
+
+      if (!resume) {
+        setApplyError("Please set an active resume first.");
         return;
       }
 
-      const res = await applyJobApi(
-        accessToken,
-        id,
-        activeResume.data.resume._id,
-      );
+      const res = await applyJobApi(accessToken, id, resume._id);
 
       setApplyMsg(res.data.message || "Applied ✅");
     } catch (err) {
