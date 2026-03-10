@@ -23,7 +23,6 @@ export default function RecruiterApplicantsPage() {
   const [error, setError] = useState("");
   const [updatingId, setUpdatingId] = useState(null);
 
-
   const load = async () => {
     if (!jobId) {
       setError("Invalid job ID");
@@ -108,6 +107,16 @@ export default function RecruiterApplicantsPage() {
                     <p className="text-sm text-slate-600">
                       {a.studentId?.email}
                     </p>
+                    {a.resumeId?.fileUrl && (
+                      <a
+                        href={a.resumeId.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:underline"
+                      >
+                        View Resume
+                      </a>
+                    )}
 
                     <p className="text-xs text-slate-500 mt-1">
                       Applied: {new Date(a.createdAt).toLocaleString()}
@@ -117,7 +126,7 @@ export default function RecruiterApplicantsPage() {
                   <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
                     <span
                       className={`text-xs font-bold px-3 py-1 rounded-full border ${badgeClass(
-                        a.status
+                        a.status,
                       )}`}
                     >
                       {a.status}
