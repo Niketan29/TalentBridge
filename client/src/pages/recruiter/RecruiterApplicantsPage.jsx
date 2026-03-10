@@ -109,7 +109,7 @@ export default function RecruiterApplicantsPage() {
                     </p>
                     {a.resumeId && (
                       <Link
-                        to={`/student/resume/${a.resumeId._id}/preview`}
+                        to={`/dashboard/resume/${a.resumeId._id}/preview`}
                         className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:underline"
                       >
                         📄 View Resume
