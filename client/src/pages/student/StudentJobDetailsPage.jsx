@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getJobByIdApi } from "../../services/jobApi";
 import { useAuth } from "../../context/useAuth";
 import { applyJobApi } from "../../services/applicationApi";
-import { getActiveResumeApi } from "../../services/resumeApi";
+import { getMyResumesApi } from "../../services/resumeApi";
 
 export default function StudentJobDetailsPage() {
   const { id } = useParams();
@@ -57,21 +57,24 @@ export default function StudentJobDetailsPage() {
 
   const handleApply = async () => {
     try {
+      setApplyMsg("");
+      setApplyError("");
       setApplying(true);
 
-      if (user.role !== "student") return;
+      // fetch student's resumes
+      const resResumes = await getMyResumesApi(accessToken);
+      const resumes = resResumes?.data?.resumes || [];
 
-      const activeResumeRes = await getActiveResumeApi(accessToken);
+      // find active resume
+      const activeResume = resumes.find((r) => r.isActive);
 
-      const resume = activeResumeRes?.data?.resume;
-
-      if (!resume) {
+      if (!activeResume) {
         setApplyError("Please set an active resume first.");
         return;
       }
 
-      const res = await applyJobApi(accessToken, id, resume._id);
-
+      // apply with active resume id
+      const res = await applyJobApi(accessToken, id, activeResume._id);
       setApplyMsg(res.data.message || "Applied ✅");
     } catch (err) {
       setApplyError(err?.response?.data?.message || "Apply failed");
