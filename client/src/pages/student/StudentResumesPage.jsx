@@ -9,7 +9,7 @@ import {
 } from "../../services/resumeApi";
 
 export default function StudentResumesPage() {
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
 
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -162,7 +162,7 @@ export default function StudentResumesPage() {
                 <div className="mt-5 flex flex-col sm:flex-row gap-2">
                   {user?.role === "student" && (
                     <Link
-                      to={`/dashboard/resumes/${id}/edit`}
+                      to={`/dashboard/resumes/${r._id}/edit`}
                       className="px-5 py-3 rounded-xl border text-sm font-semibold hover:bg-slate-50"
                     >
                       Edit
